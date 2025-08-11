@@ -8,4 +8,7 @@ datasets/plates_yolo/labels/
 datasets/**/*.cache
 *.cache
 
+# Outputs from training/inference
+runs/
+
 
