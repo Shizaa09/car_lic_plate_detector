@@ -1,0 +1,4 @@
+path: datasets/plates_yolo
+train: images/train
+val: images/val
+names: ['license_plate']
