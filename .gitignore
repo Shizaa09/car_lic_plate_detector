@@ -1,4 +1,11 @@
 # Ignore only the local virtual environment
 .venv/
 
+# Datasets: keep YAML but ignore heavy images/labels and caches
+dataset/
+datasets/plates_yolo/images/
+datasets/plates_yolo/labels/
+datasets/**/*.cache
+*.cache
+
 
