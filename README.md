@@ -9,24 +9,33 @@ This project runs a trained YOLOv8 model to detect car license plates. It includ
 - `.venv/` — local virtual environment (created on your machine)
 
 ## Quick start on Windows (CPU)
+**Prerequisites**: Extract the project zip file to `D:\car_lic_plate_detector\`
+
 1) Open Command Prompt in the project folder:
 ```
 cd /d D:\car_lic_plate_detector
 ```
-2) Create and activate a virtual environment:
+
+2) Choose one of the setup options:
+
+### Option A: Fresh install (recommended)
+Create and activate a new virtual environment:
 ```
 python -m venv .venv
 .venv\Scripts\activate
 ```
+
 3) Install CPU-only PyTorch (official CPU wheels):
 ```
 python -m pip install --upgrade pip setuptools wheel
 python -m pip install torch==2.4.1 torchvision==0.19.1 torchaudio==2.4.1 --index-url https://download.pytorch.org/whl/cpu
 ```
+
 4) Install Ultralytics and OpenCV:
 ```
 pip install ultralytics opencv-python
 ```
+
 5) Ensure your weights file exists:
 - Preferred: `best.pt` in the project root
 - Alternative: `weights/best_colab.pt`
@@ -40,11 +49,27 @@ python run_detect.py
 - A window will display results. Press any key (`image`) or `q` (`video`/`webcam`) to close
 - Outputs are saved next to your input as `<name>_det.jpg` or `<name>_det.mp4`
 
-## Running on another PC
-Repeat the same steps on the target machine:
+### Option B: Use existing virtual environment (faster)
+If you transferred the project with the `.venv` folder included:
+1) Open Command Prompt in the project folder:
+```
+cd /d D:\car_lic_plate_detector
+```
 
-firstly extract the zip file to LocalDisk D.
-then, run these commands in command prompt one by one.
+2) Activate the existing virtual environment:
+```
+.venv\Scripts\activate
+```
+
+3) Run detection directly:
+```
+python run_detect.py
+```
+
+**Note**: This option may have compatibility issues if the PCs have different architectures or Python versions.
+
+## Running on another PC
+Follow **Option A** (fresh install) on the target machine:
 ```
 cd /d D:\car_lic_plate_detector
 python -m venv .venv
@@ -54,9 +79,12 @@ python -m pip install torch==2.4.1 torchvision==0.19.1 torchaudio==2.4.1 --index
 pip install ultralytics opencv-python
 python run_detect.py
 ```
-Copy `best.pt` with the project if it’s not already present.
+
+**Prerequisites**: Extract the project zip file to `D:\car_lic_plate_detector\` and ensure `best.pt` is present.
 
 ## Linux/macOS (optional)
+**Prerequisites**: Extract the project zip file to your desired location
+
 ```
 python3 -m venv .venv
 source .venv/bin/activate
@@ -70,6 +98,8 @@ python run_detect.py
 - `ModuleNotFoundError: No module named 'cv2'` → `pip install opencv-python` in the venv
 - No GUI window (remote/locked-down environments) → ask for a save-only version that skips `cv2.imshow`
 - Slow on CPU → reduce `imgsz` inside the script (e.g., 512 or 416)
+- Virtual environment issues → Use **Option A** (fresh install) instead of Option B
 
 ## Notes
 - Training was done in Google Colab (GPU). Only `best.pt` is needed here for inference.
+- The project is designed to work from `D:\car_lic_plate_detector\` but can be placed elsewhere by adjusting the paths in the commands.
