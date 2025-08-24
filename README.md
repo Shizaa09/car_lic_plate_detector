@@ -42,6 +42,9 @@ python run_detect.py
 
 ## Running on another PC
 Repeat the same steps on the target machine:
+
+firstly extract the zip file to LocalDisk D.
+then, run these commands in command prompt one by one.
 ```
 cd /d D:\car_lic_plate_detector
 python -m venv .venv
