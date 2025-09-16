@@ -264,38 +264,51 @@ def run_video(model: YOLO, source: Union[int, Path]) -> None:
         out_path = source.with_name(source.stem + "_det.mp4")
         writer = open_writer_like(cap, out_path)
 
+    # Display user instructions
     print("Press 'q' to quit.")
+    
+    # Process video/webcam stream with YOLO model
     for result in model.predict(
         source=str(source) if isinstance(source, Path) else source,
-        stream=True,
-        device="cpu",
-        imgsz=640,
-        conf=0.25,
-        verbose=False,
+        stream=True,        # Enable streaming for real-time processing
+        device="cpu",       # Use CPU for compatibility
+        imgsz=640,          # Standard YOLO input size
+        conf=0.25,          # Confidence threshold
+        verbose=False,      # Suppress verbose output
     ):
+        # Generate annotated frame with bounding boxes
         frame = result.plot()
 
+        # Handle webcam case: create writer on first frame
         if writer is None and cap is None:
-            # Webcam: create writer on first frame
+            # Set up output directory and path for webcam recording
             out_dir = Path("runs") / "predict_video_cpu"
             out_dir.mkdir(parents=True, exist_ok=True)
             out_path = out_dir / "webcam_det.mp4"
+            
+            # Get frame dimensions and create video writer
             h, w = frame.shape[:2]
             writer = cv2.VideoWriter(str(out_path), cv2.VideoWriter_fourcc(*"mp4v"), 25.0, (w, h))
 
+        # Write frame to output video if writer is available
         if writer is not None:
             writer.write(frame)
 
+        # Display the annotated frame
         cv2.imshow("Detections (press q to exit)", frame)
+        
+        # Check for 'q' key press to exit
         if cv2.waitKey(1) & 0xFF == ord("q"):
             break
 
+    # Clean up resources
     if cap is not None:
         cap.release()
     if writer is not None:
         writer.release()
     cv2.destroyAllWindows()
 
+    # Notify user of saved output
     if out_path is not None:
         print(f"Saved annotated video to: {out_path}")
 
