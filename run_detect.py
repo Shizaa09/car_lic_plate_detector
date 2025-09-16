@@ -314,19 +314,48 @@ def run_video(model: YOLO, source: Union[int, Path]) -> None:
 
 
 def main() -> None:
+    """
+    Main entry point for the PlateNet AI detection system.
+    
+    This function orchestrates the entire detection workflow:
+    1. Resolves the project structure and model weights
+    2. Loads the trained YOLO model
+    3. Prompts user for detection mode
+    4. Executes the appropriate detection function
+    
+    The function handles all three detection modes:
+    - Image processing: Single image detection and annotation
+    - Video processing: Video file detection with output saving
+    - Webcam processing: Real-time live detection
+    
+    Raises:
+        SystemExit: For various error conditions (invalid input, missing files)
+        
+    Note:
+        All detection operations use CPU processing for maximum compatibility.
+        The system automatically creates output directories and files as needed.
+    """
+    # Get the project root directory (where this script is located)
     project_root = Path(__file__).resolve().parent
+    
+    # Resolve and load the trained model weights
     weights = resolve_weights(project_root)
     model = YOLO(str(weights))
 
+    # Get user's preferred detection mode
     mode = choose_mode()
+    
+    # Execute detection based on user choice
     if mode == "1":
+        # Image detection mode
         img = prompt_path("Enter image path: ")
         run_image(model, img)
     elif mode == "2":
+        # Video detection mode
         vid = prompt_path("Enter video path: ")
         run_video(model, vid)
     else:
-        # Webcam
+        # Webcam detection mode
         index_str = input("Enter webcam index (default 0): ").strip() or "0"
         if not index_str.isdigit():
             print("Invalid webcam index.")
@@ -334,6 +363,7 @@ def main() -> None:
         run_video(model, int(index_str))
 
 
+# Script execution entry point
 if __name__ == "__main__":
     main()
 
