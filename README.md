@@ -1,6 +1,6 @@
-# Car License Plate Detector (YOLOv8, CPU-friendly)
+# PlateNet AI - License Plate Detection System
 
-This project runs a trained YOLOv8 model to detect car license plates. It includes a single interactive script that supports image, video, or webcam input and is optimized for CPU-only systems.
+PlateNet AI is a comprehensive license plate detection system built with YOLOv8. It provides real-time detection capabilities for images, videos, and live webcam feeds, optimized for CPU-only systems while maintaining high accuracy and performance.
 
 ## Project layout
 - `best.pt` — your trained weights (place this in the project root)
@@ -12,7 +12,7 @@ This project runs a trained YOLOv8 model to detect car license plates. It includ
 **Prerequisites**: Extract the project zip file to `D:\car_lic_plate_detector\`
 
 1) Open Command Prompt in the project folder:
-```
+```  
 cd /d D:\car_lic_plate_detector
 ```
 
